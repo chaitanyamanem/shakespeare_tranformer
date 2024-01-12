@@ -14,11 +14,12 @@ class Head(nn.Module):
         self.dropout = nn.Dropout(0.2)     
         
     def forward(self,X,y=None):
+        B,T,C = X.shape
         q = self.query(X)
         k = self.key(X)
         v = self.value(X)
         wei = q @ k.transpose(-2, -1) / np.sqrt(k.shape[-1])
-        wei = wei.masked_fill(self.tril==0, float('-inf'))
+        wei = wei.masked_fill(self.tril[:T,:T]==0, float('-inf'))
         wei = torch.softmax(wei, axis=-1)
         wei = self.dropout(wei)
         out = wei @ v       
@@ -85,7 +86,7 @@ class Model(nn.Module):
     def generate(self, prompt, max_new_tokens, block_size):
 
         for i in range(max_new_tokens):
-            prompt = prompt[:-block_size]
+            prompt = prompt[:,-block_size:]
             pred = self(prompt)
             pred = pred[:,-1,:]
             probs = torch.softmax(pred, axis=-1)

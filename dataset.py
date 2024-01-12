@@ -6,6 +6,8 @@ You shouldn't need to make any changes to this file.
 import torch
 from torch.utils.data import Dataset
 from torch.utils.data.dataloader import DataLoader
+import pickle
+import os
 
 
 class CharDataset(Dataset):
@@ -36,6 +38,14 @@ class CharDataset(Dataset):
 
     def get_block_size(self):
         return self.config.block_size
+    
+    def save_vocab(self, directory:str):
+        path1 = os.path.join(directory,"stoi.pkl")      
+        path2 = os.path.join(directory,"itos.pkl")      
+        with open(path1, 'wb') as f:
+            pickle.dump(self.stoi, f)
+        with open(path2, 'wb') as f:
+            pickle.dump(self.itos, f)
 
     def __len__(self):
         return len(self.data) - self.config.block_size

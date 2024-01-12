@@ -10,7 +10,8 @@ from tqdm import tqdm
 ## training function
 def train_loop(dataloader, model, loss_fn, optimizer, max_iters = None, val_data = None):
     model.train()
-    train_bar = tqdm(total=len(dataloader), desc='Train Step', position=0)
+    total_steps = max_iters if max_iters is not None else len(dataloader)
+    train_bar = tqdm(total=total_steps, desc='Train Step', position=0)
     for batch, (X,y) in enumerate(dataloader):
         if max_iters is not None and batch > max_iters:
             break        
