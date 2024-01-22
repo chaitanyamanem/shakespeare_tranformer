@@ -4,10 +4,14 @@ This project presents a decoder-only transformer architecture trained on Shakesp
 
 ### Model and Training
 
-This is a decoder only architecture similar to GPT2 model. Model has attension layers, multiple attension heads, whcih can be configured from the config file in the `trainer.py`. In the current version of the model 6 layers and 6 attention heads are used. Embeddign dimension used was 384, context length and the batch size are 256, 64 respectively. Learning rate used was 3e-4. Model trained for 7000 steps and acheived 1.4 validation loss. Sample generation can be seen below. In this case model is trained on Shakespeare text using charecter level encoding. vocab size of 65 allowed me to train with batch size 64 on my single GPU of 6 GB machine. Model has the size of 10 Million parameters. Details model size by layer give below.
+This is a decoder-only architecture, similar to the GPT-2 model. The model includes attention layers with multiple attention heads, which can be configured from the config file in `trainer.py`. In the current version of the model, 6 layers and 6 attention heads are used. The embedding dimension used was 384, and the context length and batch size are set to 256 and 64, respectively. The learning rate used was 3e-4. The model was trained for 7000 steps and achieved a validation loss of 1.4.
+
+Sample generation can be seen below. In this case, the model is trained on Shakespearean text using character-level encoding. A vocabulary size of 65 allowed me to train with a batch size of 64 on my single GPU with 6 GB of memory. The model has a size of 10 million parameters. Details of the model size by layer are given below.
+
 #### Model size
 
-Embedding dimension and the vocab size decides the number of parameters in the embedding layer. Also, batch size * context_length * vocab_size in the final classification head decides the memory needs to store the lgits. in total for the above mentioned configuration, total model size in parameters in 10 Million. Breakdown of each layer and block is given below.
+The embedding dimension and vocabulary size determine the number of parameters in the embedding layer. Additionally, the memory required to store the logits in the final classification head is determined by the product of batch size, context length, and vocabulary size. For the above-mentioned configuration, the total model size in parameters is 10 million. A breakdown of each layer and block is provided below.
+
 <br><br>
 ![model_size](images/model_size.png)
 <br><br>
