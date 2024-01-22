@@ -109,6 +109,7 @@ if __name__ == '__main__':
     ratio = .9
     split_idx = int(len(data) * ratio)
     train_dataset = CharDataset(config, data[:split_idx], type='train')
+    train_dataset.save_vocab(model_save_path) ## save vocab files to use later
     val_dataset = CharDataset(config, data[split_idx:], type='test', train_dataset=train_dataset)
     train_data_loader = DataLoader(
             train_dataset,
